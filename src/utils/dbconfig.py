@@ -1,5 +1,7 @@
-from logging import exception
+from rich.console import Console
 import mysql.connector
+
+console = Console()
 
 def dbconfig():
     try:
@@ -9,6 +11,6 @@ def dbconfig():
             passwd='password'
         )
     except Exception as e:
-        print(e.message)
+        console.print_exception(show_locals=True)
         
         
