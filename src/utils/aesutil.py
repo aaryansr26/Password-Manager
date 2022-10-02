@@ -4,6 +4,8 @@ import base64
 from Crypto import Random
 import sys
 
+
+
 ''' 
 Creating functionality for AES Algorithm
 Encrypt() - Encrypt function basically encrypts the given plaintext into ciphertext using a key
