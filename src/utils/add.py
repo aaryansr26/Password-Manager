@@ -19,14 +19,14 @@ def addEntry(mp, ds, sitename, siteurl, email, username):
     password = getpass("Password: ")
     mk = computeMasterKey(mp, ds)
     
-    encrypted_key = utils.aesutil.encrypt(key=mk, source=password, keyType="bytes")
+    encrypted = utils.aesutil.encrypt(key=mk, source=password, keyType="bytes")
     
     #add the password to Database
     db = dbconfig()
     cursor = db.cursor()
     
     query = "INSERT INTO pm.entries (sitename, siteurl, email, username, password) values (%s, %s, %s, %s, %s)"
-    val = (sitename, siteurl, email, username, password)
+    val = (sitename, siteurl, email, username, encrypted)
     
     cursor.execute(query, val)
     db.commit()
