@@ -4,8 +4,6 @@ import base64
 from Crypto import Random
 import sys
 
-
-
 ''' 
 Creating functionality for AES Algorithm
 Encrypt() - Encrypt function basically encrypts the given plaintext into ciphertext using a key
@@ -46,50 +44,45 @@ def decrypt(key, source, decode=True,keyType="hex"):
 	return data[:-padding]  # remove the padding
 
 
-
-
-
-
-
-# def encrypt(key, source, encode=True, keyType='hex'):
-#     '''
-#     Returns base64 encoded cipher
-#     '''
+def encrypt(key, source, encode=True, keyType='hex'):
+    '''
+    Returns base64 encoded cipher
+    '''
     
-#     source = source.encode()
-#     if keyType=='hex':
-#         key = bytes(bytearray.fromhex(key))
-#     else:
-#         #use SHA-256 over our key to get proper-size AES key
-#         key = key.encode()
-#         key = SHA256.new(key).digest()
+    source = source.encode()
+    if keyType=='hex':
+        key = bytes(bytearray.fromhex(key))
+    else:
+        #use SHA-256 over our key to get proper-size AES key
+        key = key.encode()
+        key = SHA256.new(key).digest()
     
-#     IV = Random.new().read(AES.block_size)
-#     encryptor = AES.new(key, AES.MODE_CBC, IV)
-#     padding = AES.block_size - len(source) % AES.block_size
-#     source += bytes([padding]) * padding
-#     cipherdata = encryptor.encrypt(source)
-#     return base64.b64encode(cipherdata).decode() if encode else cipherdata, key
+    IV = Random.new().read(AES.block_size)
+    encryptor = AES.new(key, AES.MODE_CBC, IV)
+    padding = AES.block_size - len(source) % AES.block_size
+    source += bytes([padding]) * padding
+    cipherdata = encryptor.encrypt(source)
+    return base64.b64encode(cipherdata).decode() if encode else cipherdata, key
 
-# def decrypt(key, source, decode=True, keyType="hex"):
+def decrypt(key, source, decode=True, keyType="hex"):
     
-#     source = source.encode()
+    source = source.encode()
     
-#     if decode:
-#         source = base64.b64decode(source)
+    if decode:
+        source = base64.b64decode(source)
     
-#     if keyType=="hex":
-#         key = bytes(bytearray.fromhex(key))
-#     else:
-#         key = key.encode()
-#         key = SHA256.new(key).hexdigest()
+    if keyType=="hex":
+        key = bytes(bytearray.fromhex(key))
+    else:
+        key = key.encode()
+        key = SHA256.new(key).hexdigest()
         
-#     IV = source[:AES.block_size]  #Extracting source from ciphertext
-#     decryptor = AES.new(key, AES.MODE_CBC, IV)
-#     plaintext = decryptor.decrypt(source[AES.block_size:])
-#     padding = plaintext[-1]
+    IV = source[:AES.block_size]  #Extracting source from ciphertext
+    decryptor = AES.new(key, AES.MODE_CBC, IV)
+    plaintext = decryptor.decrypt(source[AES.block_size:])
+    padding = plaintext[-1]
     
-#     if plaintext[-padding:] != bytes([padding]) * padding:
-#         raise ValueError("Invalid Padding..")
+    if plaintext[-padding:] != bytes([padding]) * padding:
+        raise ValueError("Invalid Padding..")
     
-#     return plaintext[:-padding]
+    return plaintext[:-padding]
