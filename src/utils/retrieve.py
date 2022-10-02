@@ -1,3 +1,4 @@
+from py_compile import PyCompileError
 from utils.dbconfig import dbconfig
 from rich import print as printc
 from rich.table import Table
@@ -7,6 +8,7 @@ from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Hash import SHA512
 import utils.aesutil
+import pyperclip
 
 def computeMasterKey(mp, ds):
     password = mp.encode()
@@ -53,6 +55,12 @@ def retrieve(mp, ds, search, decryptPassword=False):
     if len(results)==1 and decryptPassword:
         mk = computeMasterKey(mp, ds)
         decrypted = utils.aesutil.decrypt(key=mk, source=results[0][4], keyType="bytes")
+        pyperclip.copy(decrypted.decode())
+        printc("[green][+][/green] Password copied to clipboard!")
+        
+        
+    db.close()
+        
         
         
         
