@@ -39,7 +39,7 @@ def retrieve(mp, ds, search, decryptPassword=False):
         return
     
     if (decryptPassword and len(results) > 1) or (not decryptPassword):
-        table = Table("title = Results")
+        table = Table(title="Results")
         table.add_column("Site Name")
         table.add_column("Site URL")
         table.add_column("Email")
@@ -47,7 +47,7 @@ def retrieve(mp, ds, search, decryptPassword=False):
         table.add_column("Password")
         
         for i in results:
-            table.add_row(i[0], i[1], i[2], i[3], "{hidden}")
+            table.add_row(i[0], i[1], i[2], i[3], '{hidden}') 
             console = Console()
             console.print(table)
             return
